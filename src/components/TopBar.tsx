@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router-dom";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 export function TopBar() {
   const navigate = useNavigate();
@@ -83,6 +84,8 @@ export function TopBar() {
           >
             Subscribe
           </Button>
+
+          <LanguageSelector />
         </div>
 
         <div className="flex items-center gap-2">
