@@ -1,198 +1,201 @@
 import { useState } from "react";
-import { MainLayout } from "@/layouts/MainLayout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wand2, Upload, Play } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Checkbox } from "@/components/ui/checkbox";
+import { 
+  Circle, Star, Folder, Sparkles, ChevronDown, 
+  Grid3x3, Menu, Plus, Upload, Video 
+} from "lucide-react";
 
 export default function VideoGenerator() {
-  const [prompt, setPrompt] = useState("");
-  const [isGenerating, setIsGenerating] = useState(false);
-  const { toast } = useToast();
-
-  const handleGenerate = () => {
-    setIsGenerating(true);
-    toast({
-      title: "Generating Video",
-      description: "Your video is being created...",
-    });
-    setTimeout(() => {
-      setIsGenerating(false);
-      toast({
-        title: "Video Generated!",
-        description: "Your video is ready.",
-      });
-    }, 5000);
-  };
+  const [selectedView, setSelectedView] = useState("task");
 
   return (
-    <MainLayout>
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-6">
-          <h1 className="text-4xl font-bold mb-2">Video Generator</h1>
-          <p className="text-muted-foreground">
-            Create animated videos from text or images
-          </p>
+    <div className="h-screen flex flex-col bg-[#0a0a0f]">
+      {/* Top Bar */}
+      <div className="h-14 bg-[#0a0a0f] border-b border-border/20 flex items-center justify-between px-6">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-primary" />
+            <span className="font-semibold text-foreground">Wan</span>
+          </div>
+          <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground">
+            Creation: All
+            <ChevronDown className="w-4 h-4" />
+          </Button>
+        </div>
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon">
+            <Sparkles className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <Grid3x3 className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="icon">
+            <Circle className="w-4 h-4" />
+          </Button>
+          <Button variant="default" size="sm">
+            Upgrade
+          </Button>
+          <div className="flex items-center gap-2 text-sm">
+            <Plus className="w-4 h-4" />
+            <span>0</span>
+          </div>
+          <Button variant="ghost" size="icon" className="rounded-full bg-primary">
+            <span className="text-xs text-primary-foreground">U</span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left Sidebar */}
+        <div className="w-16 bg-[#0a0a0f] border-r border-border/20 flex flex-col items-center py-4 gap-4">
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Circle className="w-5 h-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Sparkles className="w-5 h-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Video className="w-5 h-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Grid3x3 className="w-5 h-5" />
+          </Button>
+          <div className="flex-1" />
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Folder className="w-5 h-5" />
+          </Button>
+          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
+            <Star className="w-5 h-5" />
+          </Button>
         </div>
 
-        <Tabs defaultValue="text-to-video" className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
-            <TabsTrigger value="text-to-video">Text-to-Video</TabsTrigger>
-            <TabsTrigger value="image-to-video">Image-to-Video</TabsTrigger>
-          </TabsList>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Main Area */}
-            <div className="lg:col-span-2 space-y-6">
-              <TabsContent value="text-to-video" className="mt-0">
-                <Card className="p-6 bg-card/50 backdrop-blur border-border/50 space-y-4">
-                  <div>
-                    <Label className="mb-2 block">Video Prompt</Label>
-                    <Textarea
-                      placeholder="Describe the video you want to create..."
-                      value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
-                      className="min-h-[120px]"
-                    />
-                  </div>
-                  <Button
-                    onClick={handleGenerate}
-                    disabled={isGenerating}
-                    className="w-full h-12 text-lg gap-2 bg-gradient-to-r from-neon-purple to-neon-blue hover:opacity-90"
-                  >
-                    <Wand2 className="w-5 h-5" />
-                    {isGenerating ? "Generating..." : "Generate Video"}
-                  </Button>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="image-to-video" className="mt-0">
-                <Card className="p-6 bg-card/50 backdrop-blur border-border/50 space-y-4">
-                  <div>
-                    <Label className="mb-2 block">Upload Image</Label>
-                    <div className="border-2 border-dashed border-border rounded-lg p-12 text-center cursor-pointer hover:border-primary transition-colors">
-                      <Upload className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
-                      <p className="text-muted-foreground">
-                        Click or drag an image to upload
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        JPG, PNG, WEBP (max 3MB)
-                      </p>
-                    </div>
-                  </div>
-                  <div>
-                    <Label className="mb-2 block">Motion Prompt (Optional)</Label>
-                    <Textarea
-                      placeholder="Describe how the image should move..."
-                      className="min-h-[80px]"
-                    />
-                  </div>
-                  <Button
-                    onClick={handleGenerate}
-                    disabled={isGenerating}
-                    className="w-full h-12 text-lg gap-2 bg-gradient-to-r from-neon-purple to-neon-blue hover:opacity-90"
-                  >
-                    <Wand2 className="w-5 h-5" />
-                    {isGenerating ? "Generating..." : "Generate Video"}
-                  </Button>
-                </Card>
-              </TabsContent>
-
-              {/* Preview */}
-              <Card className="p-6 bg-card/30 backdrop-blur border-border/50">
-                <Label className="mb-3 block">Preview</Label>
-                <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <Play className="w-16 h-16 mx-auto mb-2 text-muted-foreground" />
-                    <p className="text-muted-foreground">Generated video will appear here</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* Settings */}
-            <div>
-              <Card className="p-6 bg-card/50 backdrop-blur border-border/50 space-y-4">
-                <h3 className="font-bold">Video Settings</h3>
-
-                <div>
-                  <Label className="mb-2 block">Model</Label>
-                  <Select defaultValue="wan">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="wan">WAN Video 2.2</SelectItem>
-                      <SelectItem value="animate">AnimateDiff</SelectItem>
-                      <SelectItem value="video">VideoCrafter</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label className="mb-2 block">Duration (seconds)</Label>
-                  <Slider defaultValue={[5]} min={1} max={10} step={1} />
-                  <p className="text-sm text-muted-foreground mt-1">5 seconds</p>
-                </div>
-
-                <div>
-                  <Label className="mb-2 block">Resolution</Label>
-                  <Select defaultValue="720">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="480">480p</SelectItem>
-                      <SelectItem value="720">720p</SelectItem>
-                      <SelectItem value="1080">1080p</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label className="mb-2 block">Frame Rate</Label>
-                  <Select defaultValue="24">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="24">24 FPS</SelectItem>
-                      <SelectItem value="30">30 FPS</SelectItem>
-                      <SelectItem value="60">60 FPS</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <Label className="mb-2 block">Camera Movement</Label>
-                  <Select defaultValue="none">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="none">None</SelectItem>
-                      <SelectItem value="pan">Pan</SelectItem>
-                      <SelectItem value="zoom">Zoom</SelectItem>
-                      <SelectItem value="rotate">Rotate</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="pt-4 border-t">
-                  <p className="text-xs text-muted-foreground">
-                    Inspired by WAN Video - Integration coming soon
-                  </p>
-                </div>
-              </Card>
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col">
+          {/* Top Controls */}
+          <div className="h-12 bg-[#0a0a0f] border-b border-border/20 flex items-center justify-end px-6 gap-2">
+            <Checkbox id="favorite" />
+            <label htmlFor="favorite" className="text-sm text-muted-foreground">Favorite</label>
+            <div className="flex gap-1 ml-4">
+              <Button 
+                variant={selectedView === "task" ? "secondary" : "ghost"} 
+                size="sm"
+                onClick={() => setSelectedView("task")}
+              >
+                Task View
+              </Button>
+              <Button 
+                variant={selectedView === "merge" ? "secondary" : "ghost"} 
+                size="sm"
+                onClick={() => setSelectedView("merge")}
+              >
+                Merge View
+              </Button>
             </div>
           </div>
-        </Tabs>
+
+          {/* Empty State */}
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-24 h-24 rounded-full bg-muted/20 flex items-center justify-center mx-auto mb-4">
+                <Sparkles className="w-12 h-12 text-muted-foreground" />
+              </div>
+              <Folder className="w-20 h-20 text-muted-foreground mx-auto mb-2" />
+              <h3 className="text-lg font-medium text-muted-foreground mb-1">Empty</h3>
+              <p className="text-sm text-muted-foreground/60">Start your first creative content.</p>
+            </div>
+          </div>
+
+          {/* Bottom Generation Panel */}
+          <div className="border-t border-border/20 bg-[#0d0d12] p-6">
+            <div className="max-w-4xl mx-auto space-y-4">
+              {/* Example Button */}
+              <div className="flex justify-center mb-2">
+                <Button variant="ghost" size="sm" className="gap-2">
+                  Example
+                  <ChevronDown className="w-3 h-3" />
+                </Button>
+              </div>
+
+              {/* First Frame Upload */}
+              <Card className="p-6 bg-card/30 border-border/50">
+                <div className="flex items-start gap-4">
+                  <div className="w-24 h-24 rounded-lg bg-muted/20 flex items-center justify-center cursor-pointer hover:bg-muted/30 transition-colors">
+                    <div className="text-center">
+                      <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-1" />
+                      <p className="text-xs text-muted-foreground">Add image</p>
+                    </div>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <h4 className="font-medium mb-1">First Frame</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Select an image and use it as the first frame of the video
+                        </p>
+                      </div>
+                      <Button variant="ghost" size="icon">
+                        <ChevronDown className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Prompt Input */}
+              <div className="relative">
+                <Textarea
+                  placeholder="Refer to the image and describe the desired dynamic process."
+                  className="min-h-[60px] pr-12 bg-card/30 border-border/50"
+                />
+                <Button 
+                  size="icon" 
+                  className="absolute right-2 top-2"
+                  variant="ghost"
+                >
+                  <Sparkles className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {/* Bottom Controls */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Button variant="secondary" size="sm" className="gap-2">
+                    <Video className="w-4 h-4" />
+                    Video
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    Image to Video
+                  </Button>
+                  <div className="h-6 w-px bg-border mx-2" />
+                  <Button variant="ghost" size="sm" className="gap-1">
+                    <Sparkles className="w-3 h-3" />
+                    Wan2.5
+                  </Button>
+                  <Button variant="ghost" size="sm">720P</Button>
+                  <Button variant="ghost" size="sm">5s</Button>
+                  <Button variant="ghost" size="icon">
+                    <Plus className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Grid3x3 className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon">
+                    <Menu className="w-4 h-4" />
+                  </Button>
+                </div>
+                <Button className="gap-2">
+                  <Plus className="w-4 h-4" />
+                  0
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </MainLayout>
+    </div>
   );
 }
