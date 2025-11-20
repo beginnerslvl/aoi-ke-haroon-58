@@ -238,33 +238,71 @@ export default function QuickCreate() {
             {currentStep === 4 && (
               <div className="space-y-6">
                 <div>
-                  <Label className="text-base mb-3 block">Eye Color</Label>
-                  <div className="grid grid-cols-5 gap-3">
-                    {colors.slice(0, 9).map((color) => (
-                      <Button
-                        key={`eye-${color}`}
-                        variant={formData.eyeColor === color ? "default" : "outline"}
-                        onClick={() => updateField("eyeColor", color)}
-                        className="h-12"
-                      >
-                        {color}
-                      </Button>
-                    ))}
+                  <Label className="text-base mb-3 block">Elegir color de ojos</Label>
+                  <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
+                    {colors.slice(0, 9).map((color) => {
+                      const colorMap: Record<string, string> = {
+                        Red: "bg-red-500",
+                        Orange: "bg-orange-500",
+                        Gold: "bg-yellow-500",
+                        Green: "bg-green-500",
+                        Blue: "bg-blue-500",
+                        Purple: "bg-purple-500",
+                        Brown: "bg-amber-700",
+                        Black: "bg-gray-900",
+                        Grey: "bg-gray-500"
+                      };
+                      return (
+                        <button
+                          key={`eye-${color}`}
+                          type="button"
+                          onClick={() => updateField("eyeColor", color)}
+                          className={`flex flex-col items-center gap-2 p-2 rounded-lg transition-all ${
+                            formData.eyeColor === color ? "scale-105" : "hover:scale-105"
+                          }`}
+                        >
+                          <div className={`w-16 h-16 rounded-full ${colorMap[color]} border-4 border-background shadow-lg flex items-center justify-center relative overflow-hidden`}>
+                            <div className="absolute inset-0 bg-gradient-radial from-white/40 to-transparent"></div>
+                            <div className="w-8 h-8 rounded-full bg-black/80"></div>
+                          </div>
+                          <span className="text-xs font-medium">{color}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
                 <div>
-                  <Label className="text-base mb-3 block">Hair Color</Label>
-                  <div className="grid grid-cols-5 gap-3">
-                    {colors.map((color) => (
-                      <Button
-                        key={`hair-${color}`}
-                        variant={formData.hairColor === color ? "default" : "outline"}
-                        onClick={() => updateField("hairColor", color)}
-                        className="h-12"
-                      >
-                        {color}
-                      </Button>
-                    ))}
+                  <Label className="text-base mb-3 block">Elegir color de cabello</Label>
+                  <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
+                    {colors.map((color) => {
+                      const colorMap: Record<string, string> = {
+                        Red: "bg-red-500",
+                        Orange: "bg-orange-500",
+                        Gold: "bg-yellow-500",
+                        Green: "bg-green-500",
+                        Blue: "bg-blue-500",
+                        Purple: "bg-purple-500",
+                        Brown: "bg-amber-700",
+                        Black: "bg-gray-900",
+                        Grey: "bg-gray-500",
+                        White: "bg-gray-100"
+                      };
+                      return (
+                        <button
+                          key={`hair-${color}`}
+                          type="button"
+                          onClick={() => updateField("hairColor", color)}
+                          className={`flex flex-col items-center gap-2 p-2 rounded-lg transition-all ${
+                            formData.hairColor === color ? "scale-105" : "hover:scale-105"
+                          }`}
+                        >
+                          <div className={`w-16 h-16 rounded-full ${colorMap[color]} border-4 border-background shadow-lg relative overflow-hidden`}>
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-white/30"></div>
+                          </div>
+                          <span className="text-xs font-medium">{color}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
