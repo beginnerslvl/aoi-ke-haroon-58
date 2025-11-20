@@ -1,4 +1,4 @@
-import { Search, Bell, Coins } from "lucide-react";
+import { Search, Bell, Coins, Plus, Users, MessageSquare, BookOpen, FileText, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,15 +32,39 @@ export function TopBar() {
           </div>
         </div>
 
-        <Button
-          variant="outline"
-          size="sm"
-          className="hidden md:flex items-center gap-2 bg-gradient-to-r from-neon-pink to-neon-purple text-white border-0 hover:opacity-90"
-        >
-          Subscribe with 70% discount
-        </Button>
-
         <div className="flex items-center gap-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Plus className="w-5 h-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>Create</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigate("/create/quick")}>
+                <Users className="w-4 h-4 mr-2" />
+                Characters
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/chat")}>
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Group Chat
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <FileText className="w-4 h-4 mr-2" />
+                Create Publication
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <BookOpen className="w-4 h-4 mr-2" />
+                Book of Knowledge
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate("/model-hub")}>
+                <Upload className="w-4 h-4 mr-2" />
+                Upload Model
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Button variant="ghost" size="icon" className="relative">
             <Bell className="w-5 h-5" />
             <Badge className="absolute -top-1 -right-1 w-4 h-4 p-0 flex items-center justify-center bg-primary text-[10px]">
@@ -48,16 +72,20 @@ export function TopBar() {
             </Badge>
           </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex items-center gap-2"
-            onClick={() => navigate("/account")}
-          >
-            <Coins className="w-4 h-4 text-neon-cyan" />
-            <span className="font-semibold">1,234</span>
-          </Button>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-card/50 border border-border/50">
+            <Coins className="w-4 h-4 text-neon-purple" />
+            <span className="text-sm font-medium">1,250</span>
+          </div>
 
+          <Button
+            className="hidden md:flex bg-gradient-to-r from-neon-pink to-neon-purple hover:opacity-90"
+            size="sm"
+          >
+            Subscribe
+          </Button>
+        </div>
+
+        <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="rounded-full">
