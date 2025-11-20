@@ -2,8 +2,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import LanguageSelection from "./pages/LanguageSelection";
 import Home from "./pages/Home";
 import QuickCreate from "./pages/QuickCreate";
 import Characters from "./pages/Characters";
@@ -27,7 +28,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<LanguageSelection />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/create/quick" element={<QuickCreate />} />
             <Route path="/create/advanced" element={<QuickCreate />} />
             <Route path="/characters" element={<Characters />} />

@@ -5,9 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { MessageSquare, Image as ImageIcon, Video, Grid3x3, Check } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import animeBg1 from "@/assets/anime-bg-1.jpg";
-import animeBg2 from "@/assets/anime-bg-2.jpg";
-import animeBg3 from "@/assets/anime-bg-3.jpg";
+import animeChar1 from "@/assets/anime-char-1.jpg";
+import animeChar2 from "@/assets/anime-char-2.jpg";
+import animeChar3 from "@/assets/anime-char-3.jpg";
+import animeChar4 from "@/assets/anime-char-4.jpg";
 
 const mockCharacters = [
   { id: 1, name: "Kiryuu Kikyou", image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=600&fit=crop", category: "Anime", gender: "Female", tags: ["Roleplay"] },
@@ -26,9 +27,10 @@ export default function Home() {
     <MainLayout>
       <div className="max-w-7xl mx-auto space-y-8 relative">
         <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-          <img src={animeBg1} alt="" className="absolute top-10 left-10 w-64 h-96 object-cover opacity-5 blur-sm" />
-          <img src={animeBg2} alt="" className="absolute top-20 right-20 w-64 h-96 object-cover opacity-5 blur-sm" />
-          <img src={animeBg3} alt="" className="absolute bottom-20 left-1/4 w-64 h-96 object-cover opacity-5 blur-sm" />
+          <img src={animeChar1} alt="" className="absolute top-10 left-10 w-72 h-96 object-cover opacity-5" />
+          <img src={animeChar2} alt="" className="absolute top-20 right-20 w-72 h-96 object-cover opacity-5" />
+          <img src={animeChar3} alt="" className="absolute bottom-20 left-1/4 w-72 h-96 object-cover opacity-5" />
+          <img src={animeChar4} alt="" className="absolute bottom-10 right-1/3 w-72 h-96 object-cover opacity-5" />
         </div>
 
         <div className="text-center space-y-4 py-8">
@@ -65,9 +67,29 @@ export default function Home() {
         </div>
 
         <div className="space-y-6">
-          <div className="space-y-2">
+          <div className="space-y-3">
             <h2 className="text-3xl font-bold">{t("tavern.title")}</h2>
             <p className="text-muted-foreground max-w-4xl">{t("tavern.subtitle")}</p>
+            <p className="text-sm text-muted-foreground">{t("tavern.available")}</p>
+            <div className="space-y-2 pt-2">
+              <div className="flex items-center gap-2 text-sm">
+                <Check className="w-5 h-5 text-primary" />
+                <span>{t("tavern.create")}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Check className="w-5 h-5 text-primary" />
+                <span>{t("tavern.voice")}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Check className="w-5 h-5 text-primary" />
+                <span>{t("tavern.books")}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Check className="w-5 h-5 text-primary" />
+                <span>{t("tavern.image")}</span>
+              </div>
+            </div>
+            <Button className="mt-4">{t("tavern.chat")}</Button>
           </div>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => <Badge key={cat} variant="secondary" className="px-4 py-2 text-sm cursor-pointer hover:bg-primary/20">{cat}</Badge>)}
